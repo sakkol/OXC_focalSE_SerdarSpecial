@@ -394,6 +394,55 @@ ax.FontSize = 20;
 print(fullfile(FIGDIR,'Fig3_SodiumTrajectory.png'),'-dpng','-r300')
 
 %% ════════════════════════════════════════════════════════════════════════
+%  SUPPLEMENTARY FIGURE — PRIOR MEDS
+%% ════════════════════════════════════════════════════════════════════════
+fprintf('--- Supplementary Figure: Prior ASMs / Benzo / Concomitant ASMs ---\n');
+
+% Panel A: Prior ASM Count histogram
+ax4 = subplot(1,2,1);
+if ismember('Prior_ASM_Count', T.Properties.VariableNames)
+    pc = T.Prior_ASM_Count(~isnan(T.Prior_ASM_Count));
+    if ~isempty(pc)
+        histogram(ax4, pc, 'BinEdges',-0.5:1:max(pc)+0.5, 'FaceColor',PALETTE(2,:), ...
+            'EdgeColor','w','LineWidth',1);
+        % xlabel(ax4,'Number of Prior ASMs'); ylabel(ax4,'Count');
+        % title(ax4,'Prior ASMs Before OXC','FontWeight','bold');
+        ax4.XTick = 0:max(pc);
+        ax4.Box='off'; ax4.YGrid='on'; ax4.GridAlpha=0.3;
+    end
+end
+ax4.FontSize = 20;
+
+% Panel B: Other Maintenance ASM count (concomitant agents per patient)
+ax6 = subplot(1,2,2);
+casmCols = {'Other_Maintenance_ASM1','Other_Maintenance_ASM2', ...
+            'Other_Maintenance_ASM3','Other_Maintenance_ASM4'};
+if ~any(ismember(casmCols, T.Properties.VariableNames))
+    % Fallback to the column names actually produced by the import step
+    casmCols = {'Concomitant_ASM1','Concomitant_ASM2','Concomitant_ASM3','Concomitant_ASM4'};
+end
+avail = casmCols(ismember(casmCols, T.Properties.VariableNames));
+if ~isempty(avail)
+    casmCount = zeros(N,1);
+    for k = 1:numel(avail)
+        col = T.(avail{k});
+        if iscell(col)
+            casmCount = casmCount + double(~cellfun(@isempty,col) & ...
+                ~cellfun(@(x) strcmpi(x,'None'), col));
+        end
+    end
+    histogram(ax6, casmCount, 'BinEdges',-0.5:1:max(casmCount)+0.5, ...
+        'FaceColor',PALETTE(5,:),'EdgeColor','w','LineWidth',1);
+    % xlabel(ax6,'Number of Other Maintenance ASMs'); ylabel(ax6,'Count');
+    % title(ax6,'Other Maintenance ASMs at OXC Load','FontWeight','bold');
+    ax6.XTick = 0:max(casmCount);
+    ax6.Box='off'; ax6.YGrid='on'; ax6.GridAlpha=0.3;
+end
+ax6.FontSize = 20;
+
+print(fullfile(FIGDIR,'FigS1_Prior-ASMs.png'),'-dpng','-r300')
+
+%% ════════════════════════════════════════════════════════════════════════
 %  STATISTICAL ANALYSES
 %% ════════════════════════════════════════════════════════════════════════
 fprintf('\n');
