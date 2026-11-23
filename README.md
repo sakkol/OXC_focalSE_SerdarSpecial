@@ -1,4 +1,4 @@
-# Efficacy and Safety of Oxcarbazepine Loading Dose in Patients with Focal Status Epilepticus (the Serdar special)
+## Efficacy and Safety of Oxcarbazepine Loading Dose in Patients with Focal Status Epilepticus (the Serdar special): analyses script
 
 
 
@@ -9,6 +9,20 @@ This project was completed at the University of Alabama at Birmingham to evaluat
 The dataset can be obtained from the first or last author of the study (Serdar Akkol, MD PhD or Kristina Stein, PharmD). The analysis script is shared within this folder.
 
 
+
+## Requirements
+
+MATLAB R2020a or later with the Statistics and Machine Learning Toolbox.
+
+
+
+## How to run
+
+Put the scripts and OXC\_FocalSE\_AnalysisData.xlsx in one folder. Run OXC\_FocalSE\_Analysis.m.
+
+
+
+## Manuscript Link
 
 Manuscript is published here: \[submitted]
 
